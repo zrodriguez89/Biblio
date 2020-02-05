@@ -1,0 +1,332 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+
+<head>
+    <meta http-equiv="Content-type" content="text/html;charset=UTF-8" />
+    <meta http-equiv="cache-control" content="no-cache" />
+    <title>
+        Your Publications
+    </title>
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+    <script src="./src/bibtex_js.js" type="text/javascript" charset="utf-8"></script>
+    <bibtex src="https://github.com/zrodriguez89/Biblio/blob/master/chem350DF.bib?raw=true"></bibtex>
+    <script>
+        $(function() {
+		  $("#Fontselector").on("change",function() {
+		    var font = $("#Fontselector option:selected").text();
+		    console.log(font);
+
+		    $('.title.fonters').each(function() {
+		    	$(this).css("font-family",font);
+		    });
+		  });
+		});
+		function reset() {
+			$("select").each(function () {
+			  localStorage.setItem($(this).attr("id"),"");
+			  $(this).val("");
+			});
+			$("#searchbar").val("");
+			$("#searchbar").trigger('change');
+		}
+    </script>
+
+    <style>
+        html,body,span,h1 {
+	    	font-family: "Times New Roman", Times, serif;
+	    	font-size: 17px;
+	    }
+	    bibtex { display: none; }
+	    .searchbar { margin-left:0px;}
+	    #bibtex_errors { margin-top:10px; color: red;}
+	    h1.header {margin-left:8px;}
+	    h1.YEAR { font-size: 17px; font-weight: bold; display: inline; margin-left:8px;}
+
+	    #selectAll {
+			position: absolute;
+		    left: -100vw;
+	    }
+    </style>
+
+    <!-- Latest compiled and minified CSS -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
+
+</head>
+
+<body>
+    <a name="top"></a>
+    <h1 class="header">Your Publications</h1>
+    <div class="container-fluid">
+        <div class="searchbar">
+            <div style="float:left;">
+                <button type="button" class="btn btn-default" onclick="reset()">Reset</button>
+            </div>
+            <div style="float:left;">
+                <select id="authorselectfirst" class="btn bibtex_search bibtex_generate_author" style="border: 1px solid lightgrey;" extra="first" search="author">
+                    <option value="">Search First Author</option>
+                </select>
+            </div>
+            <div style="float:left;">
+                <select class="bibtex_search bibtex_generate_author" search="author">
+                    <option value="">Search Author</option>
+                </select>
+            </div>
+            <div style="float:left;">
+                <select class="bibtex_search bibtex_generate_year" search="year">
+                    <option value="">Search Year</option>
+                </select>
+            </div>
+            <div style="float:left;">
+                <select class="bibtex_search bibtex_generate_journal" search="journal">
+                    <option value="">Search Journal</option>
+                </select>
+            </div>
+            <div style="float:left;">
+                <select id="topicselect" class="btn bibtex_search" style="border: 1px solid lightgrey;">
+                    <option value="">Search Topic</option>
+                    <!-- Add topic values here -->
+                    <option value="Example topic">Example Topic</option>
+                </select>
+            </div>
+            <div style="float:left;">
+                <input type="text" class="bibtex_search form-control" id="searchbar" placeholder="Search publications">
+                <span class="help-block">Example: journal 2015 (finds the intersection of the two terms)</span>
+            </div>
+        </div>
+
+        <!-- This div servevs as the select/deselect all button. -->
+        <div style="float:left;">
+            <label class="btn btn-default" for="selectAll">Select / Deselect All</label>
+            <input type="checkbox" id="selectAll" name="selectAll" value="selectAll" checked>
+        </div>
+    </div>
+
+    <div class="bibtex_structure">
+        <div class="group year" extra="ASC number">
+            <a href="#top" style="display: inline"><em>(Top of the page)</em></a>
+            <div style="padding-bottom:10px;"></div>
+            <div class="sort journal" extra="DESC string">
+                <div class="templates"></div>
+            </div>
+        </div>
+    </div>
+
+
+    <form id="form" onsubmit="return false;">
+
+        <input type="submit" name="submit" value="Export" class="btn btn-default">
+
+        <div id="bibtex_display">
+            <div class="bibtex_template" style="display: none;">
+                <ul>
+                    <li>
+                        <input type="checkbox" class="check" checked>
+                        <span class="if title">
+                            <a class="bibtexVar" href="http://www.website.com/~demo/papers/+BIBTEXKEY+.pdf" extra="BIBTEXKEY">
+                                <span style="text-decoration: underline;" class="entry title"></span>
+                            </a>
+                        </span>
+
+                        <div class="if author">
+                            <span class="entry author"></span>
+                        </div>
+
+                        <span class="if doi"><em><span class="entry doi"></span></em>,</span>
+                        <span class="if t"><em><span class="entry t"></span></em>,</span>
+                        <span class="if issn"><em><span class="entry issn"></span></em>,</span>
+                        <span class="if volume"><em><span class="entry volume"></span></em>,</span>
+                        <span class="if outcome"><em><span class="entry outcome"></span></em>,</span>
+                        <span class="if journal"><em><span class="entry journal"></span></em>,</span>
+                        <span class="if publisher"><em><span class="entry publisher"></span></em>,</span>
+                        <span class="if booktitle">In <em><span class="entry booktitle"></span></em>,</span>
+                        <span class="if address"><span class="entry address"></span>,</span>
+                        <span class="if month"><span class="entry month"></span>,</span>
+                        <span class="if year"><span class="entry year"></span>.</span>
+                        <span class="if note"><span class="entry note"></span></span>
+                        <a class="bibtexVar" role="button" data-toggle="collapse" href="#bib+BIBTEXKEY+" aria-expanded="false" aria-controls="bib+BIBTEXKEY+" extra="BIBTEXKEY">
+                            [bib]
+                        </a>
+            </div>
+            <div class="bibtexVar collapse" id="bib+BIBTEXKEY+" extra="BIBTEXKEY">
+                <div class="well">
+                    <pre><span class="bibtexraw noread"></span></pre>
+                </div>
+            </div>
+            <div style="display:none"><span class="bibtextype"></span></div>
+            </li>
+            </ul>
+        </div>
+        </div>
+    </form>
+
+
+
+
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
+    <script type="text/javascript">
+
+/*
+The checkbox with id 'selectAll' is selected by default. On a click to the elementd with id 'selectAll', check if the element is checked (given that it's a checkbox) if it's checked, then select all the other checkboxes.
+otherwise on an uncheck click, uncheck all the other checkboxes in the page.
+*/
+        $('#selectAll').click(function() {
+            if (this.checked) {
+                $(':checkbox').each(function() {
+                    this.checked = true;
+                });
+            } else {
+                $(':checkbox').each(function() {
+                    this.checked = false;
+                });
+            }
+        });
+
+/*
+to get the header names for the csv file to be exported, get all the elements with the class name 'if'
+then get the second class name of each of those elements (the second class name after if is the header name)
+*/
+        var headers = $('.if');
+
+        // array to store the correct names (class names that come after the class 'if')
+        var exportHeaders = [];
+        for (var i = 0; i < headers.length; i++) {
+            var header = headers[i].classList[1];
+            // for aesthetics only - captilize the first char of the header name
+            header = header[0].toUpperCase() + header.slice(1);
+            exportHeaders.push(header);
+        }
+
+/*
+on submission of the form:
+1. make a 2D array to store everything to be exported. first add the headers array to it so it's at index 0
+2. get all the li elements in the page
+3. check if each element's checkbox is checked
+4. if they're checked, get all tthe elements with the class name 'entry'
+5. store the values of elements with class 'entry' in a key-value object (fieldValuePair) where keys are the
+second class names (which are the field names) and the value is the actual bib value
+6. match the fields that exist with all the fields to be listed:
+	a. make a key-value (headersObj) object from the 'headers' array where keys are the field names and values are empty
+	b. match the values from the fieldValuePair object to the keys in the headersObj object so that avaialbe values will be mapped to appropriate keys while non-existant values will be mapped as empty values
+7. go through the final key-value object that contains all the available entry values matched with field names and store the values only in an array
+8. add each of the values array to a bigger array which will be exported as a csv
+9. if there's nothing checked, alert the user. otherwise, export the final 2D array to a csv by calling the exportToCsv function.
+*/
+        $('#form').on('submit', function() {
+            var toBeExported = [];
+            toBeExported.push(exportHeaders);
+
+            var listItems = $(".bibtexentry:visible").find("li"); //a JQuery object of all li elements
+
+            listItems.each(function(idx, li) { //loop through each li element
+
+                if ($(li).children('input').is(':checked')) { //check if the checkbox (which is a child of 'li') is checked
+                    var row = [];
+                    var fields = $(this).find(".entry"); //a JQuery object of fields in each entry
+
+                    var fieldValuePair = {}; //object to store values in each entry and their respective field name
+
+                    //loop through all the fields of the current li
+                    //get the values and store the values in the fieldValuePair with the keys being the field names
+                    for (var i = 0; i < fields.length; i++) {
+                        var key = fields[i].classList[1];
+                        var value = fields[i].innerText;
+                        fieldValuePair[key] = value;
+                    }
+
+                    var headersObj = {}
+
+                    //get the field names (class names) and store them as keys with empty values in headersObj
+                    for (var i = 0; i < headers.length; i++) {
+                        var headersKey = headers[i].classList[1];
+                        headersObj[headersKey] = "";
+                    }
+
+                    //loop through the fieldValuePair object and match the keys in headersObj
+                    //to the values that correspond to them in fieldValuePair
+                    //this leaves the keys in headersObj that don't have corresponding values in fieldValuePair empty
+                    Object.keys(fieldValuePair).forEach((key, i) => {
+                        headersObj[key] = fieldValuePair[key];
+                    });
+
+                    //store the values only of headersObj in an array
+                    row = Object.values(headersObj);
+
+                    toBeExported.push(row); //add the row array to the final one to be exported
+                }
+            });
+
+            $(this).find('input').is(':checked');
+            if ($("input.check[type='checkbox']:checked").length < 1) {
+                alert("You must select at least one entry for export");
+            } else {
+                exportToCsv('export.csv', toBeExported);
+            }
+        }); //end ('#form').on('submit')
+
+
+
+
+/*
+This function is written by Jossef Harush and can be found in the below url
+when you open the link, a csv file will be downloaded
+https://jsfiddle.net/jossef/m3rrLzk0/
+I added the comments though
+*/
+        function exportToCsv(filename, rows) {
+        	/* this function checks if a row in the 2D array rows
+        	is empty or not. If it's not empty, then it checks for dates, a single double quote and commas
+        	it converts a date it a string, replaces the single double quote to 2 double quotes, and keeps the commas surrounded by double quotes.
+        	it then adds a comma at the end of each string row, concatinates it to the larger string (finalVal) and adds a new line for the new row.
+        	*/
+            var processRow = function(row) {
+                var finalVal = '';
+                for (var j = 0; j < row.length; j++) {
+                    var innerValue = row[j] === null ? '' : row[j].toString();
+
+                    if (row[j] instanceof Date) {
+                        innerValue = row[j].toLocaleString();
+                    };
+                    var result = innerValue.replace(/"/g, '""');
+                    if (result.search(/("|,|\n)/g) >= 0)
+                        result = '"' + result + '"';
+                    if (j > 0)
+                        finalVal += ',';
+                    finalVal += result;
+                }
+                return finalVal + '\n';
+            };
+
+            //the loop processes each row in the 2D array rows and addes the processed row as string to the csvFile string
+            var csvFile = '';
+            for (var i = 0; i < rows.length; i++) {
+                csvFile += processRow(rows[i]);
+            }
+
+            //create a file (blob object) of type text(not binary) csv file
+            var blob = new Blob([csvFile], {
+                type: 'text/csv;charset=utf-8;'
+            });
+
+            //saves the blob object to disk on IE
+            if (navigator.msSaveBlob) { // IE 10+
+                navigator.msSaveBlob(blob, filename);
+            } else {
+                var link = document.createElement("a");
+                if (link.download !== undefined) { // feature detection
+                    // Browsers that support HTML5 download attribute
+                    var url = URL.createObjectURL(blob);
+                    link.setAttribute("href", url);
+                    link.setAttribute("download", filename);
+                    link.style.visibility = 'hidden';
+                    document.body.appendChild(link);
+                    link.click();
+                    document.body.removeChild(link);
+                }
+            }
+        } //end exportToCsv
+    </script>
+</body>
+
+</html>

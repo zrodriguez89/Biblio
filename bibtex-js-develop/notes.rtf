@@ -1,0 +1,44 @@
+{\rtf1\ansi\ansicpg1252\cocoartf1671\cocoasubrtf400
+{\fonttbl\f0\fswiss\fcharset0 Helvetica;}
+{\colortbl;\red255\green255\blue255;\red0\green0\blue0;}
+{\*\expandedcolortbl;;\cssrgb\c0\c0\c0;}
+\margl1440\margr1440\vieww15180\viewh8400\viewkind0
+\pard\tx720\tx1440\tx2160\tx2880\tx3600\tx4320\tx5040\tx5760\tx6480\tx7200\tx7920\tx8640\pardirnatural\partightenfactor0
+
+\f0\fs24 \cf0 Sometimes bib data doesn\'92t load for certain references\
+\
+\
+@article\{Knuth:1965:LR,\
+      author = \{Knuth, Donald\},\
+      citeulike-article-id = \{5914311\},\
+      journal = \{Information and Control\},\
+      keywords = \{parsing\},\
+      pages = \{607--639\},\
+      posted-at = \{2009-10-09 06:17:47\},\
+      priority = \{2\},\
+      title = \{On the Translation of Languages from Left to Right\},\
+      volume = \{8\},\
+      year = \{1965\}\
+  \}\
+\
+\
+\
+None of the 2010 articles load [bib]\
+\
+I added journal and year and didn\'92t break. I did have sometimes the load being wonky (see pdf) and also the output wen\'92t above the search bar and filters instead of below at one point. Chalk it up to user. \
+\
+Forgot to clarify. Search bar is only intersection not or.\
+\
+\
+Getting the search Bar to also take or arguments or to have separate one with OR functionality. \
+\
+<input type="text" class="bibtex_search form-control" id="searchbar" placeholder="Search publications">\
+<span class="help-block">Example: journal 2015 (finds the intersection of the two terms)</span>\
+\
+To clarify about this:\
+\
+\pard\pardeftab720\partightenfactor0
+\cf0 \expnd0\expndtw0\kerning0
+"@[date]=1970%@[biblio-group]=autonomous robots" (The "%" is currently used to split the search terms and you could say functions as the &. I may change this to "&&" since I can see how a "%" might be used in a search). This would again search both the date and the biblio-group. The search can get even more complicated when you start using RegEx expressions for the values like "@[date]=1970|1971" so that you have an OR statement for both dates\
+\
+Seems to not take this kind of argument. I just space out the terms. (e.g. journal 2010 wikipedia [term]\'85.)}
